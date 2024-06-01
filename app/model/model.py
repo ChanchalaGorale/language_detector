@@ -7,9 +7,8 @@ __version__ = "1.0.0"
 BASE_DIR = Path(__file__).resolve(strict=True).parent
 
 
-with open(f"{BASE_DIR}/trained_pipeline-{__version__}.pkl", "rb") as f:
+with open(f"{BASE_DIR}/train_pipeline-{__version__}.pkl", "rb") as f:
     model = pickle.load(f)
-
 
 classes = [
     "Arabic",
