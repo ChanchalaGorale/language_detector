@@ -1,33 +1,34 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from flask import Flask, render_template, request, redirect
 from model.model import predict_pipeline
 from model.model import __version__ as model_version
-from fastapi.middleware.cors import CORSMiddleware
+from flask_cors import CORS, cross_origin
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
-app = FastAPI()
+app = Flask(__name__)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[ "https://cmg-ai-ml.netlify.app/", ],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+cors = CORS(app)
 
-class TextIn(BaseModel):
-    text: str
-
-class PredictionOut(BaseModel):
-    language: str
-
-@app.get("/")
+@app.route("/",  methods=["GET", "POST"])
 def home():
-    return {"health_check": "OK", "model_version": model_version}
+    result=""
+    text = request.form['text']
 
-@app.post("/predict", response_model=PredictionOut)
-def predict(payload: TextIn):
-    print("text",payload)
-    print("text1",payload.text)
-    language = predict_pipeline(payload.text)
-    print(language)
-    return {"language": language}
+    result = predict_pipeline(text)
 
+   # print("text",text)
+    return  render_template("home.html",result=result )
+
+@app.route("/predict" )
+def predict():
+    text = request.form['text']
+
+    print("text",text)
+    #print("text1",text)
+   # language = predict_pipeline(text)
+    #print(language)
+    #return {"language": language}
+    return "hey"
+
+if __name__ =="__main__":
+    app.run(debug=True)
