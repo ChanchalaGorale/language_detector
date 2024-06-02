@@ -8,8 +8,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[ "*"],
-    allow_credentials=True,
+    allow_origins=[ "https://cmg-ai-ml.netlify.app/", ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
