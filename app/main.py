@@ -2,9 +2,11 @@ from flask import Flask, render_template, request, redirect
 from model.model import predict_pipeline
 from model.model import __version__ as model_version
 from flask_cors import CORS, cross_origin
-
+import os
 import logging
 logging.basicConfig(level=logging.DEBUG)
+
+port = int(os.environ.get('PORT', 5000))
 
 app = Flask(__name__)
 
@@ -22,6 +24,5 @@ def home():
     return  render_template("home.html",result=result )
 
 
-
 if __name__ =="__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True)
