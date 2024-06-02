@@ -36,4 +36,4 @@ def predict_pipeline(text):
     text = re.sub(r"[[]]", " ", text)
     text = text.lower()
     pred = model.predict([text])
-    return classes[pred[0]]
+    return ''.join(pred)
